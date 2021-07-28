@@ -47,7 +47,7 @@ const Articles = {
   all: page =>
     requests.get(`/articles?${limit(10, page)}`),
   marca: page =>
-    requests.get(`/articles?${limit(10, page)}`),
+    requests.get(`/articles/marca?${limit(10, page)}`),
   byAuthor: (author, page) =>
     requests.get(`/articles?author=${encode(author)}&${limit(5, page)}`),
   byTag: (tag, page) =>

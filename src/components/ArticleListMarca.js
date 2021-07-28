@@ -24,8 +24,9 @@ const ArticleList = (props) => {
   return (
     <div>
       {props.articles.map((article) => {
+        //guardo la descripcion del articulo en minusculas
         let articleLowerCase = article.description.toLowerCase();
-        let test = marcas.some(item => articleLowerCase.includes(item.toLowerCase()))
+        let test = marcas.some(item => articleLowerCase.includes(item.toLowerCase())) //cada item lo convierto a minusculas para la comparacion
         if (test){
           return <ArticlePreview article={article} key={article.slug} />
         }

@@ -106,15 +106,12 @@ const MainView = (props) => {
         </ul>
       </div>
 
-      {props.tab === "marca" ? (
-        <ArticleListMarca
-          pager={props.pager}
-          articles={props.articles}
-          loading={props.loading}
-          articlesCount={props.articlesCount}
-          currentPage={props.currentPage}
-        />
-      ) : (
+      {/* 
+      borro nuevamente el ternario que controlaba ArticleList
+      el funcionamineto ahora es el original
+      los datos consume directamente de la API
+      igualmente dejo el otro componente, ya que ahi solucioné el caseSensitive
+      */}
         <ArticleList
           pager={props.pager}
           articles={props.articles}
@@ -122,7 +119,7 @@ const MainView = (props) => {
           articlesCount={props.articlesCount}
           currentPage={props.currentPage}
         />
-      )}
+      
     </div>
   );
 };

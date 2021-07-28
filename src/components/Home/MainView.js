@@ -1,21 +1,24 @@
-import ArticleList from '../ArticleList';
-import React from 'react';
-import agent from '../../agent';
-import { connect } from 'react-redux';
-import { CHANGE_TAB } from '../../constants/actionTypes';
+import ArticleList from "../ArticleList";
+import ArticleListMarca from "../ArticleListMarca";
+import React from "react";
+import agent from "../../agent";
+import { connect } from "react-redux";
+import { CHANGE_TAB } from "../../constants/actionTypes";
 
-const YourFeedTab = props => {
+const YourFeedTab = (props) => {
   if (props.token) {
-    const clickHandler = ev => {
+    const clickHandler = (ev) => {
       ev.preventDefault();
-      props.onTabClick('feed', agent.Articles.feed, agent.Articles.feed());
-    }
+      props.onTabClick("feed", agent.Articles.feed, agent.Articles.feed());
+    };
 
     return (
       <li className="nav-item">
-        <a  href=""
-            className={ props.tab === 'feed' ? 'nav-link active' : 'nav-link' }
-            onClick={clickHandler}>
+        <a
+          href=""
+          className={props.tab === "feed" ? "nav-link active" : "nav-link"}
+          onClick={clickHandler}
+        >
           Your Feed
         </a>
       </li>
@@ -24,24 +27,43 @@ const YourFeedTab = props => {
   return null;
 };
 
-const GlobalFeedTab = props => {
-  const clickHandler = ev => {
+const GlobalFeedTab = (props) => {
+  const clickHandler = (ev) => {
     ev.preventDefault();
-    props.onTabClick('all', agent.Articles.all, agent.Articles.all());
+    props.onTabClick("all", agent.Articles.all, agent.Articles.all());
   };
   return (
     <li className="nav-item">
       <a
         href=""
-        className={ props.tab === 'all' ? 'nav-link active' : 'nav-link' }
-        onClick={clickHandler}>
+        className={props.tab === "all" ? "nav-link active" : "nav-link"}
+        onClick={clickHandler}
+      >
         Global Feed
       </a>
     </li>
   );
 };
 
-const TagFilterTab = props => {
+const GlobalFeedTabMarca = (props) => {
+  const clickHandler = (ev) => {
+    ev.preventDefault();
+    props.onTabClick("marca", agent.Articles.marca, agent.Articles.marca());
+  };
+  return (
+    <li className="nav-item">
+      <a
+        href=""
+        className={props.tab === "marca" ? "nav-link active" : "nav-link"}
+        onClick={clickHandler}
+      >
+        Marca
+      </a>
+    </li>
+  );
+};
+
+const TagFilterTab = (props) => {
   if (!props.tag) {
     return null;
   }
@@ -55,40 +77,52 @@ const TagFilterTab = props => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.articleList,
   tags: state.home.tags,
-  token: state.common.token
+  token: state.common.token,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, pager, payload) => dispatch({ type: CHANGE_TAB, tab, pager, payload })
+const mapDispatchToProps = (dispatch) => ({
+  onTabClick: (tab, pager, payload) =>
+    dispatch({ type: CHANGE_TAB, tab, pager, payload }),
 });
 
-const MainView = props => {
+const MainView = (props) => {
   return (
     <div className="col-md-9">
       <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
-
           <YourFeedTab
             token={props.token}
             tab={props.tab}
-            onTabClick={props.onTabClick} />
+            onTabClick={props.onTabClick}
+          />
 
           <GlobalFeedTab tab={props.tab} onTabClick={props.onTabClick} />
+          <GlobalFeedTabMarca tab={props.tab} onTabClick={props.onTabClick} />
 
           <TagFilterTab tag={props.tag} />
-
         </ul>
       </div>
 
-      <ArticleList
-        pager={props.pager}
-        articles={props.articles}
-        loading={props.loading}
-        articlesCount={props.articlesCount}
-        currentPage={props.currentPage} />
+      {props.tab === "marca" ? (
+        <ArticleListMarca
+          pager={props.pager}
+          articles={props.articles}
+          loading={props.loading}
+          articlesCount={props.articlesCount}
+          currentPage={props.currentPage}
+        />
+      ) : (
+        <ArticleList
+          pager={props.pager}
+          articles={props.articles}
+          loading={props.loading}
+          articlesCount={props.articlesCount}
+          currentPage={props.currentPage}
+        />
+      )}
     </div>
   );
 };

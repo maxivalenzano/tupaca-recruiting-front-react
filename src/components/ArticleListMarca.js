@@ -24,7 +24,8 @@ const ArticleList = (props) => {
   return (
     <div>
       {props.articles.map((article) => {
-        let test = marcas.some(item => article.description.includes(item))
+        let articleLowerCase = article.description.toLowerCase();
+        let test = marcas.some(item => articleLowerCase.includes(item.toLowerCase()))
         if (test){
           return <ArticlePreview article={article} key={article.slug} />
         }
